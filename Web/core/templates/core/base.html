@@ -1,1 +1,56 @@
-HELLO WORLD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        body { margin:0; }
+
+        a{
+            color: black;
+        }
+
+        * {
+            margin: 0;
+        }
+    </style>
+</head>
+    <body>
+        <div class="nav-bar" style="display: flex; background-color: lightgray; justify-content: space-between; padding: 7px 7px 7px 7px; color: rgb(28, 28, 28);
+        align-items: center; color: rgb(28, 28, 28);">
+            <div>
+                <a href="{% url 'index' %}" style="padding: 10px 10px 10px 10px; text-decoration: none; font-weight: bold;">CRM SPDD</a>
+                <a href="{% url 'about' %}" style="padding: 10px 10px 10px 10px; text-decoration: none; font-weight: bold;">About</a> 
+            </div>
+            <div style="display: FLEX; color: rgb(28, 28, 28);">
+                {% if user.is_authenticated %}
+                <p style="padding-right: 10px; align-self: center;">Welcome, {{ user.username }}!</p>
+                <a href="{% url 'dashboard' %}" style="padding: 10px 10px 10px 10px; background-color: gray; margin-right: 7px; border-radius: 12px; text-decoration: none; font-weight: bold;">Dashboard</a>
+                <a href="{% url 'leads_list' %}" style="padding: 10px 10px 10px 10px; background-color: gray; margin-right: 7px; border-radius: 12px; text-decoration: none; font-weight: bold;">Leads</a>
+                <a href="{% url 'add_lead' %}" style="padding: 10px 10px 10px 10px; background-color: gray; margin-right: 7px; border-radius: 12px; text-decoration: none; font-weight: bold;">Add lead</a>
+
+                <form method="POST" action="{% url 'logout' %}" >
+                    {% csrf_token %}
+                    <button type="submit" style="padding: 10px 10px 10px 10px; background-color: gray; margin-right: 7px; border-radius: 12px; text-decoration: none; font-weight: bold;">Logout</button>
+                </form>
+                {% else %}
+                
+                <a href="{% url 'login' %}" style="padding: 10px 10px 10px 10px; background-color: gray; margin-right: 7px; border-radius: 12px; text-decoration: none; font-weight: bold;">Log in</a>
+                <a href="{% url 'signup' %}" style="padding: 10px 10px 10px 10px; background-color: gray; border-radius: 12px; text-decoration: none; font-weight: bold;">Sign up</a>
+                
+                
+                {% endif %}
+
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        <div class="footer" style="display: flex; justify-content: center; background-color: rgb(147, 147, 147);">
+            <!-- <hr> -->
+                <p>CRM SPDD™ 2024</p>
+        </div>
+    </body>
+</html>

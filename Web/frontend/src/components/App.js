@@ -9,6 +9,12 @@ export default function App() {
       </header>
       <p>This is a simple React page example.</p>
       <button>BUTTON</button>
+      <div>
+        <a href='/home'>home</a>
+        <br></br>
+        <a href='/about'>About</a>
+      </div>
+
     </div>
   );
 }
