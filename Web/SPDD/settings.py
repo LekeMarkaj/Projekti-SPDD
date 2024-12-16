@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGIN_URL = 'login/'
-LOGOUT_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = ''
 
 # Application definition
 
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'frontend.apps.FrontendConfig',
     'userprofile',
     'dashboard',
     'lead'
@@ -123,9 +122,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/frontend/static/frontend/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "frontend/static/frontend/"
+    BASE_DIR / "/static/"
 ]
 
 # Default primary key field type

@@ -7,7 +7,7 @@ from core.views import index, about
 from userprofile.views import signup, custom_logout
 
 urlpatterns = [
-    path('home/', index, name='index'),
+    path('', index, name='index'),
     path('about/', about, name='about'),
 
     path('signup/', signup, name='signup'),
@@ -19,5 +19,4 @@ urlpatterns = [
     path('dashboard/leads', include('lead.urls')),
 
     path('admin/', admin.site.urls),
-    path('', include('frontend.urls'))
 ]
