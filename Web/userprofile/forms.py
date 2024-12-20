@@ -30,11 +30,17 @@ class SignupForm(UserCreationForm):
         'placeholder': 'Your email address',
         'class': INPUT_CLASS
     }))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Your password',
-        'class': INPUT_CLASS
-    }))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Repeat password',
-        'class': INPUT_CLASS
-    }))
+    password1 = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Your password',
+            'class': INPUT_CLASS
+        })
+    )
+    password2 = forms.CharField(
+        label="Confirm Password",
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Repeat password',
+            'class': INPUT_CLASS
+        })
+    )

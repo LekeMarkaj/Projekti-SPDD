@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGIN_URL = 'login/'
-LOGOUT_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = 'index'
 
 # Application definition
 
@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'team.context_processors.active_team',
             ],
         },
     },
