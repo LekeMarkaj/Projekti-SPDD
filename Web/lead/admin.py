@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import lead
+from .models import lead, Comment, LeadFile
 
 admin.site.register(lead)
-# Register your models here.
+admin.site.register(Comment)
+admin.site.register(LeadFile)
