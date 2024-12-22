@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 
 from .models import lead
-from .forms import AddCommentForm, AddFileForm
+from .forms import AddCommentForm, AddFileForm, AddLeadForm
 from client.models import Client, Comment as ClientComment
 from team.models import Team
 
@@ -50,7 +50,7 @@ class LeadDeleteView(LoginRequiredMixin, DeleteView):
     
 class LeadUpdateView(LoginRequiredMixin, UpdateView):
     model = lead
-    fields = ('name', 'email', 'description', 'priority', 'status',)
+    form_class = AddLeadForm
     success_url = reverse_lazy('leads:list')
 
     def get_context_data(self, **kwargs):
@@ -67,7 +67,7 @@ class LeadUpdateView(LoginRequiredMixin, UpdateView):
 
 class LeadCreateView(LoginRequiredMixin, CreateView):
     model = lead
-    fields = ('name', 'email', 'description', 'priority', 'status',)
+    form_class = AddLeadForm
     success_url = reverse_lazy('leads:list')
 
     def get_context_data(self, **kwargs):

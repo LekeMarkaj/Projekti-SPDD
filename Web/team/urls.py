@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:pk>/', views.detail, name='detail'),
     path('<int:pk>/edit/', views.edit_team, name='edit'),
     path('<int:pk>/activate/', views.teams_activate, name='activate'),
+    path('select-team-plan/', views.select_team_plan, name='select_team_plan'),
 ]

@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="{% static 'main.min.css' %}">
     <title>CRM SPDD</title>
 </head>
-    <body>
+<body class="min-h-screen flex flex-col">
+    <div class="flex-grow">
         {% include 'core/partials/nav.html' %}
-
+        
         {% if messages %}
             <div class="py-6 px-6">
                 {% for message in messages %}
@@ -20,11 +21,13 @@
                 {% endfor %}
             </div>
         {% endif %}
-
         
-        {% block content %}
-        {% endblock %}
-
-        {% include 'core/partials/footer.html' %}
-    </body>
+        <main class="flex-grow p-4">        
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+    {% include 'core/partials/footer.html' %}
+    
+</body>
 </html>

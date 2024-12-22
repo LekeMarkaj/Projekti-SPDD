@@ -19,7 +19,9 @@ def signup(request):
             
             Userprofile.objects.create(user=user, active_team=team)
 
-            return redirect('/log-in/')
+            request.session['user_id'] = user.id
+            
+            return redirect('team:select_team_plan')
     else:
         form = SignupForm()
 

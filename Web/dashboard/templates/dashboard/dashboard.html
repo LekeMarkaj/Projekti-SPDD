@@ -19,6 +19,10 @@
 
                     <a href="{% url 'leads:detail' lead.pk %}">Details</a>
                 </div>
+            {% empty %}
+                <p class="text-gray-500 mb-4">No leads available at the moment!</p>
+
+                <a href="{% url 'leads:add' %}" class="inline-block py-4 px-6 bg-teal-600 rounded-xl text-white">Add Lead</a>
             {% endfor %}
         </div>
 
@@ -31,6 +35,9 @@
 
                     <a href="{% url 'clients:detail' client.pk %}">Details</a>
                 </div>
+            {% empty %}
+                <p class="text-gray-500 mb-4">No clients available at the moment!</p>
+                <a href="{% url 'clients:add' %}" class="inline-block py-4 px-6 bg-teal-600 rounded-xl text-white">Add Client</a>
             {% endfor %}
         </div>
     </div>

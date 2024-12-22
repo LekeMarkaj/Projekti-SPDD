@@ -52,7 +52,7 @@
 
             {{ form.as_p }}
 
-            <button class="py-2 px-4 rounded-xl bg-blue-500 text-white">Submit</button>
+            <button class="mt-4 py-2 px-4 rounded-xl bg-blue-500 text-white">Submit</button>
         </form>
 
         <hr class="my-4">
@@ -74,11 +74,11 @@
 
             {{ fileform.as_p }}
 
-            <button class="py-2 px-4 rounded-xl bg-blue-500 text-white">Submit</button>
+            <button class="mt-4 py-2 px-4 rounded-xl bg-blue-500 text-white">Submit</button>
         </form>
 
         <hr class="my-4">
 
-        <a href="{% url 'leads:list' %}">Back to leads</a>
+        <a href="{% url 'leads:list' %}" class="mt-4 py-2 px-4 rounded-xl bg-teal-500 text-white">Back to leads</a>
     </div>
 {% endblock %}
