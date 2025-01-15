@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h2>Make a Payment</h2>
+    <button id="pay-button">Pay $10.00</button>
+
+    <script>
+        const stripe = Stripe("{{ stripe_publishable_key }}");
+
+        document.getElementById('pay-button').addEventListener('click', async () => {
+            const csrfToken = "{{ csrf_token }}";
+            const response = await fetch("{% url 'team:create_payment_intent' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+            });
+            const { clientSecret } = await response.json();
+
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: stripe.elements().create('card').mount('#card-element'),
+                },
+            });
+
+            if (result.error) {
+                alert("Payment failed: " + result.error.message);
+            } else {
+                alert("Payment successful!");
+            }
+        });
+    </script>
+</body>
+</html>

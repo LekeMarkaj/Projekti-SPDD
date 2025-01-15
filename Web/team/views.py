@@ -1,10 +1,17 @@
+import stripe
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from django.contrib.auth.models import User
+import logging
 
+logger = logging.getLogger(__name__)
 from .forms import TeamForm
 from .models import Team, Plan
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 @login_required
 def teams_list(request):
@@ -86,3 +93,24 @@ def select_team_plan(request):
         'team': team,
     }
     return render(request, 'team/select_team_plan.html', context)
+
+def payment(request):
+    if request.method == "GET":
+        return render(request, 'team/payment.html', {
+            'stripe_publishable_key': settings.STRIPE_PUBLIC_KEY,
+        })
+
+def create_payment_intent(request):
+    if request.method == "POST":
+        try:
+            intent = stripe.PaymentIntent.create(
+                amount=1000,  # Amount in cents ($50.00)
+                currency="usd",
+                automatic_payment_methods={
+                    'enabled': True,
+                },
+            )
+            return JsonResponse({'clientSecret': intent['client_secret']})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
