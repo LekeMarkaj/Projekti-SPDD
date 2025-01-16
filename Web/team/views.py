@@ -1,4 +1,5 @@
 import stripe
+import json
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -59,7 +60,6 @@ def edit_team(request, pk):
         'form': form
     })
 
-
 def select_team_plan(request):
     # Retrieve the user from the session
     user_id = request.session.get('user_id')
@@ -81,16 +81,17 @@ def select_team_plan(request):
             team.plan = selected_plan  # Assign the selected plan to the team
             team.save()
 
-            # Clear the session and redirect to login
+            # Proceed to create a payment intent on this page to show payment section
             del request.session['user_id']
             return redirect('login')  # Redirect to the login page
+        
         except Plan.DoesNotExist:
             return render(request, 'error.html', {'message': 'Invalid plan selected.'})
-
 
     context = {
         'plans': Plan.objects.all(),
         'team': team,
+        'stripe_publishable_key': settings.STRIPE_PUBLIC_KEY,  # Pass the Stripe key to the template
     }
     return render(request, 'team/select_team_plan.html', context)
 
@@ -103,14 +104,23 @@ def payment(request):
 def create_payment_intent(request):
     if request.method == "POST":
         try:
+            data = json.loads(request.body)
+            plan_id = data.get('plan_id')
+            selected_plan = Plan.objects.get(id=plan_id)
+            amount = int(selected_plan.price * 100)  # Convert to cents
+
+            # Create the PaymentIntent
             intent = stripe.PaymentIntent.create(
-                amount=1000,  # Amount in cents ($50.00)
+                amount=amount,  # Amount in cents
                 currency="usd",
-                automatic_payment_methods={
-                    'enabled': True,
-                },
+                automatic_payment_methods={'enabled': True},
             )
+
             return JsonResponse({'clientSecret': intent['client_secret']})
+
+        except Plan.DoesNotExist:
+            return JsonResponse({'error': 'Invalid plan selected'}, status=400)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
+
     return JsonResponse({'error': 'Invalid request method'}, status=405)
